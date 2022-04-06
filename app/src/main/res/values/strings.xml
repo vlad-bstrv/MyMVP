@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">My MVP</string>
+    <string name="login">логин</string>
+    <string name="password">пароль</string>
+    <string name="sign_in">войти</string>
+    <string name="forget_password">забыл пароль</string>
+    <string name="create_account">новый аккаунт</string>
+    <string name="password_repeat">повторите пароль</string>
+    <string name="register">зарегистрироваться</string>
+    <string name="restore_password">восстановить пароль</string>
 </resources>
