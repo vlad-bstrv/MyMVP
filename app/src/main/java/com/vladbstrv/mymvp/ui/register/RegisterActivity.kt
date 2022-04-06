@@ -8,6 +8,7 @@ import com.vladbstrv.mymvp.R
 import com.vladbstrv.mymvp.databinding.ActivityRegisterBinding
 import com.vladbstrv.mymvp.databinding.ActivityRestorePasswordBinding
 import com.vladbstrv.mymvp.ui.login.LoginActivity
+import com.vladbstrv.mymvp.ui.login.LoginPresenter
 
 class RegisterActivity : AppCompatActivity(), RegisterContract.View {
 
@@ -19,16 +20,25 @@ class RegisterActivity : AppCompatActivity(), RegisterContract.View {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        presenter = RegisterPresenter()
+        presenter = restorePresenter()
         presenter.onAttach(this)
 
         binding.registerButton.setOnClickListener {
-            presenter.onRegister(
+            presenter?.onRegister(
                 binding.loginTextInputLayout.editText?.text.toString(),
                 binding.passwordTextInputLayout.editText?.text.toString(),
                 binding.passwordRepeatTextInputLayout.editText?.text.toString()
             )
         }
+    }
+
+    private fun restorePresenter(): RegisterContract.Presenter {
+        val presenter = lastCustomNonConfigurationInstance as? RegisterPresenter
+        return presenter ?: RegisterPresenter()
+    }
+
+    override fun onRetainCustomNonConfigurationInstance(): Any? {
+        return presenter
     }
 
     override fun setSuccess() {

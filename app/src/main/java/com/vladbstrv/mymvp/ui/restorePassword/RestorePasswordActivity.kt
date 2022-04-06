@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.vladbstrv.mymvp.databinding.ActivityRestorePasswordBinding
+import com.vladbstrv.mymvp.ui.register.RegisterContract
+import com.vladbstrv.mymvp.ui.register.RegisterPresenter
 
 class RestorePasswordActivity : AppCompatActivity(), RestorePasswordContract.View {
 
@@ -15,7 +17,7 @@ class RestorePasswordActivity : AppCompatActivity(), RestorePasswordContract.Vie
         binding = ActivityRestorePasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        presenter = RestorePasswordPresenter()
+        presenter = restorePresenter()
         presenter.onAttach(this)
 
         binding.restorePasswordButton.setOnClickListener {
@@ -23,6 +25,15 @@ class RestorePasswordActivity : AppCompatActivity(), RestorePasswordContract.Vie
                 binding.loginTextInputLayout.editText?.text.toString()
             )
         }
+    }
+
+    private fun restorePresenter(): RestorePasswordContract.Presenter {
+        val presenter = lastCustomNonConfigurationInstance as? RestorePasswordContract.Presenter
+        return presenter ?: RestorePasswordPresenter()
+    }
+
+    override fun onRetainCustomNonConfigurationInstance(): Any? {
+        return presenter
     }
 
     override fun setSuccess() {

@@ -23,7 +23,7 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        presenter = LoginPresenter()
+        presenter = restorePresenter()
         presenter.onAttach(this)
 
         binding.signInButton.setOnClickListener {
@@ -42,6 +42,15 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun restorePresenter(): LoginPresenter {
+        val presenter = lastCustomNonConfigurationInstance as? LoginPresenter
+        return presenter ?: LoginPresenter()
+    }
+
+    override fun onRetainCustomNonConfigurationInstance(): Any? {
+        return presenter
     }
 
     override fun setSuccess() {
