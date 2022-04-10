@@ -1,13 +1,16 @@
 package com.vladbstrv.mymvp.ui.login
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import com.vladbstrv.mymvp.App
 import com.vladbstrv.mymvp.R
+import com.vladbstrv.mymvp.app
 import com.vladbstrv.mymvp.databinding.ActivityLoginBinding
 import com.vladbstrv.mymvp.databinding.ActivityRegisterBinding
 import com.vladbstrv.mymvp.ui.register.RegisterActivity
@@ -46,7 +49,7 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
 
     private fun restorePresenter(): LoginPresenter {
         val presenter = lastCustomNonConfigurationInstance as? LoginPresenter
-        return presenter ?: LoginPresenter()
+        return presenter ?: LoginPresenter(app.loginApi)
     }
 
     override fun onRetainCustomNonConfigurationInstance(): Any? {
