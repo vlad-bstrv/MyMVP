@@ -1,8 +1,6 @@
 package com.vladbstrv.mymvp.ui.register
 
-import android.os.Handler
-import android.os.Looper
-import com.vladbstrv.mymvp.domain.RegisterUsecase
+import com.vladbstrv.mymvp.domain.usecase.RegisterUsecase
 
 class RegisterPresenter(private val registerUsecase: RegisterUsecase) : RegisterContract.Presenter {
 

@@ -3,6 +3,7 @@ package com.vladbstrv.mymvp.ui.restorePassword
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.vladbstrv.mymvp.app
 import com.vladbstrv.mymvp.databinding.ActivityRestorePasswordBinding
 import com.vladbstrv.mymvp.ui.register.RegisterContract
 import com.vladbstrv.mymvp.ui.register.RegisterPresenter
@@ -29,15 +30,15 @@ class RestorePasswordActivity : AppCompatActivity(), RestorePasswordContract.Vie
 
     private fun restorePresenter(): RestorePasswordContract.Presenter {
         val presenter = lastCustomNonConfigurationInstance as? RestorePasswordContract.Presenter
-        return presenter ?: RestorePasswordPresenter()
+        return presenter ?: RestorePasswordPresenter(app.restoreUsecase)
     }
 
     override fun onRetainCustomNonConfigurationInstance(): Any? {
         return presenter
     }
 
-    override fun setSuccess() {
-        binding.restoredPasswordTextView.text = "password"
+    override fun setSuccess(password: String) {
+        binding.restoredPasswordTextView.text = password
     }
 
     override fun setError(error: String) {

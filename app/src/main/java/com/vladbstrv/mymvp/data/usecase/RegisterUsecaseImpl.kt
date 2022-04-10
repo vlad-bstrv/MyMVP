@@ -1,10 +1,10 @@
-package com.vladbstrv.mymvp.data
+package com.vladbstrv.mymvp.data.usecase
 
 import android.os.Handler
 import com.vladbstrv.mymvp.domain.LoginApi
-import com.vladbstrv.mymvp.domain.RegisterUsecase
+import com.vladbstrv.mymvp.domain.usecase.RegisterUsecase
 
-class RegisterUsecaseImpl(val loginApi: LoginApi, val uiHandler: Handler) : RegisterUsecase {
+class RegisterUsecaseImpl(private val loginApi: LoginApi, private val uiHandler: Handler) : RegisterUsecase {
 
     override fun register(
         login: String,

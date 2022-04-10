@@ -1,22 +1,14 @@
 package com.vladbstrv.mymvp.ui.login
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import com.vladbstrv.mymvp.App
-import com.vladbstrv.mymvp.R
 import com.vladbstrv.mymvp.app
-import com.vladbstrv.mymvp.data.LoginUsecaseImpl
 import com.vladbstrv.mymvp.databinding.ActivityLoginBinding
-import com.vladbstrv.mymvp.databinding.ActivityRegisterBinding
-import com.vladbstrv.mymvp.domain.LoginUsecase
 import com.vladbstrv.mymvp.ui.register.RegisterActivity
 import com.vladbstrv.mymvp.ui.restorePassword.RestorePasswordActivity
 

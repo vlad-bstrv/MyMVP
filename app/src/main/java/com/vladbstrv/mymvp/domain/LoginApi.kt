@@ -16,5 +16,5 @@ interface LoginApi {
 
     @WorkerThread
 
-    fun forgotPassword(login: String, email: String): Boolean
+    fun forgotPassword(login: String): String
 }

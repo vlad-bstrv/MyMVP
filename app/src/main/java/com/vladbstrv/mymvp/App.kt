@@ -4,12 +4,14 @@ import android.app.Application
 import android.content.Context
 import android.os.Handler
 import android.os.Looper
-import com.vladbstrv.mymvp.data.LoginUsecaseImpl
+import com.vladbstrv.mymvp.data.usecase.LoginUsecaseImpl
 import com.vladbstrv.mymvp.data.MockLoginApiImpl
-import com.vladbstrv.mymvp.data.RegisterUsecaseImpl
+import com.vladbstrv.mymvp.data.usecase.RegisterUsecaseImpl
+import com.vladbstrv.mymvp.data.usecase.RestoreUsecaseImpl
 import com.vladbstrv.mymvp.domain.LoginApi
-import com.vladbstrv.mymvp.domain.LoginUsecase
-import com.vladbstrv.mymvp.domain.RegisterUsecase
+import com.vladbstrv.mymvp.domain.usecase.LoginUsecase
+import com.vladbstrv.mymvp.domain.usecase.RegisterUsecase
+import com.vladbstrv.mymvp.domain.usecase.RestoreUsecase
 
 class App : Application() {
 
@@ -23,6 +25,10 @@ class App : Application() {
 
     val registerUsecase: RegisterUsecase by lazy {
         RegisterUsecaseImpl(app.loginApi, Handler(Looper.getMainLooper()))
+    }
+
+    val restoreUsecase: RestoreUsecase by lazy {
+        RestoreUsecaseImpl(app.loginApi, Handler(Looper.getMainLooper()))
     }
 
 

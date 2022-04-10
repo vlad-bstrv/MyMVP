@@ -1,11 +1,6 @@
 package com.vladbstrv.mymvp.ui.login
 
-import android.os.Handler
-import android.os.Looper
-import com.vladbstrv.mymvp.data.MockLoginApiImpl
-import com.vladbstrv.mymvp.domain.LoginApi
-import com.vladbstrv.mymvp.domain.LoginUsecase
-import java.lang.Thread.sleep
+import com.vladbstrv.mymvp.domain.usecase.LoginUsecase
 
 class LoginPresenter(private val loginUsecase: LoginUsecase) :  LoginContract.Presenter{
 

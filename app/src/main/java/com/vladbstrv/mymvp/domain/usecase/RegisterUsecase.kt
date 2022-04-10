@@ -1,4 +1,4 @@
-package com.vladbstrv.mymvp.domain
+package com.vladbstrv.mymvp.domain.usecase
 
 interface RegisterUsecase {
     fun register(

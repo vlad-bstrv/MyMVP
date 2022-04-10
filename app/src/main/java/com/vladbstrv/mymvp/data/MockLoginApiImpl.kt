@@ -35,8 +35,8 @@ class MockLoginApiImpl : LoginApi {
     }
 
     @WorkerThread
-    override fun forgotPassword(login: String, email: String): Boolean {
+    override fun forgotPassword(login: String): String {
         Thread.sleep(1_000)
-        return true
+        return mapUser[login].toString()
     }
 }
