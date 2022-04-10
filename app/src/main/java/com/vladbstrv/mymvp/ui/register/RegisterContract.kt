@@ -11,6 +11,6 @@ class RegisterContract {
 
     interface Presenter {
         fun onAttach(view: View)
-        fun onRegister(login: String, password: String, repeatPassword: String)
+        fun onRegister(login: String, password: String, repeatPassword: String, email: String)
     }
 }

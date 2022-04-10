@@ -2,8 +2,9 @@ package com.vladbstrv.mymvp.ui.restorePassword
 
 import android.os.Handler
 import android.os.Looper
+import com.vladbstrv.mymvp.domain.usecase.RestoreUsecase
 
-class RestorePasswordPresenter : RestorePasswordContract.Presenter {
+class RestorePasswordPresenter(private val restoreUsecase: RestoreUsecase) : RestorePasswordContract.Presenter {
 
     private lateinit var view: RestorePasswordContract.View
     private val uiHandler = Handler(Looper.getMainLooper())
@@ -14,13 +15,12 @@ class RestorePasswordPresenter : RestorePasswordContract.Presenter {
 
     override fun onRestore(login: String) {
         view.showProgress()
-        Thread {
-            Thread.sleep(1000)
-            uiHandler.post() {
+        restoreUsecase.restorePassword(login) {
                 view.hideProgress()
-                view.setSuccess()
+            if(it != "null") {
+                view.setSuccess(it)
             }
-        }.start()
+        }
     }
 
 }

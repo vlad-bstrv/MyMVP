@@ -8,4 +8,5 @@
     <string name="password_repeat">повторите пароль</string>
     <string name="register">зарегистрироваться</string>
     <string name="restore_password">восстановить пароль</string>
+    <string name="email">email</string>
 </resources>

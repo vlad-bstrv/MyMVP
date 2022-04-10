@@ -1,13 +1,10 @@
 package com.vladbstrv.mymvp.ui.login
 
-import android.os.Handler
-import android.os.Looper
-import java.lang.Thread.sleep
+import com.vladbstrv.mymvp.domain.usecase.LoginUsecase
 
-class LoginPresenter :  LoginContract.Presenter{
+class LoginPresenter(private val loginUsecase: LoginUsecase) :  LoginContract.Presenter{
 
     private lateinit var view: LoginContract.View
-    private val uiHandler = Handler(Looper.getMainLooper())
 
     override fun onAttach(view: LoginContract.View) {
         this.view = view
@@ -16,17 +13,16 @@ class LoginPresenter :  LoginContract.Presenter{
     override fun onLogin(login: String, password: String) {
         view.showProgress()
 
-        Thread {
-            sleep(1000)
-            uiHandler.post {
-                view.hideProgress()
-                if (login == password) {
-                    view.setSuccess()
-                } else {
-                    view.setError()
-                }
+        loginUsecase.login(login, password) { result ->
+            view.hideProgress()
+            if (result) {
+                view.setSuccess()
+            } else {
+                view.setError()
             }
-        }.start()
+        }
+
+
     }
 
 

@@ -7,9 +7,8 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import com.vladbstrv.mymvp.R
+import com.vladbstrv.mymvp.app
 import com.vladbstrv.mymvp.databinding.ActivityLoginBinding
-import com.vladbstrv.mymvp.databinding.ActivityRegisterBinding
 import com.vladbstrv.mymvp.ui.register.RegisterActivity
 import com.vladbstrv.mymvp.ui.restorePassword.RestorePasswordActivity
 
@@ -46,7 +45,7 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
 
     private fun restorePresenter(): LoginPresenter {
         val presenter = lastCustomNonConfigurationInstance as? LoginPresenter
-        return presenter ?: LoginPresenter()
+        return presenter ?: LoginPresenter(app.loginUsecase)
     }
 
     override fun onRetainCustomNonConfigurationInstance(): Any? {

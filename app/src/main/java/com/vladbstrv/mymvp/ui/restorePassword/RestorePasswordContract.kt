@@ -3,7 +3,7 @@ package com.vladbstrv.mymvp.ui.restorePassword
 class RestorePasswordContract {
 
     interface View {
-        fun setSuccess()
+        fun setSuccess(password: String)
         fun setError(error: String)
         fun showProgress()
         fun hideProgress()
