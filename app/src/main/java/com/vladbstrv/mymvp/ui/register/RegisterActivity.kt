@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.vladbstrv.mymvp.R
+import com.vladbstrv.mymvp.app
 import com.vladbstrv.mymvp.databinding.ActivityRegisterBinding
 import com.vladbstrv.mymvp.databinding.ActivityRestorePasswordBinding
 import com.vladbstrv.mymvp.ui.login.LoginActivity
@@ -24,20 +25,21 @@ class RegisterActivity : AppCompatActivity(), RegisterContract.View {
         presenter.onAttach(this)
 
         binding.registerButton.setOnClickListener {
-            presenter?.onRegister(
+            presenter.onRegister(
                 binding.loginTextInputLayout.editText?.text.toString(),
                 binding.passwordTextInputLayout.editText?.text.toString(),
-                binding.passwordRepeatTextInputLayout.editText?.text.toString()
+                binding.passwordRepeatTextInputLayout.editText?.text.toString(),
+                binding.emailTextInputLayout.editText?.text.toString()
             )
         }
     }
 
     private fun restorePresenter(): RegisterContract.Presenter {
         val presenter = lastCustomNonConfigurationInstance as? RegisterPresenter
-        return presenter ?: RegisterPresenter()
+        return presenter ?: RegisterPresenter(app.registerUsecase)
     }
 
-    override fun onRetainCustomNonConfigurationInstance(): Any? {
+    override fun onRetainCustomNonConfigurationInstance(): Any {
         return presenter
     }
 

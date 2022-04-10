@@ -1,24 +1,40 @@
 package com.vladbstrv.mymvp.data
 
+import androidx.annotation.WorkerThread
 import com.vladbstrv.mymvp.domain.LoginApi
 
-class MockLoginApiImpl: LoginApi {
+class MockLoginApiImpl : LoginApi {
 
+    private val mapUser = mutableMapOf<String, String>()
+
+    @WorkerThread
     override fun login(login: String, password: String): Boolean {
         Thread.sleep(1_000)
-        return login =="login" && password == "password"
+        return mapUser[login] == password
     }
 
-    override fun register(login: String, password: String, repeatPassword: String, email: String): Boolean {
+    @WorkerThread
+    override fun register(
+        login: String,
+        password: String,
+        repeatPassword: String,
+        email: String
+    ): Boolean {
         Thread.sleep(1_000)
-        return true
+        if(password == repeatPassword) {
+            mapUser[login] = password
+            return true
+        }
+        return false
     }
 
+    @WorkerThread
     override fun logout(): Boolean {
         Thread.sleep(1_000)
         return true
     }
 
+    @WorkerThread
     override fun forgotPassword(login: String, email: String): Boolean {
         Thread.sleep(1_000)
         return true

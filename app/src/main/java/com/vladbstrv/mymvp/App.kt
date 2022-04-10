@@ -6,8 +6,10 @@ import android.os.Handler
 import android.os.Looper
 import com.vladbstrv.mymvp.data.LoginUsecaseImpl
 import com.vladbstrv.mymvp.data.MockLoginApiImpl
+import com.vladbstrv.mymvp.data.RegisterUsecaseImpl
 import com.vladbstrv.mymvp.domain.LoginApi
 import com.vladbstrv.mymvp.domain.LoginUsecase
+import com.vladbstrv.mymvp.domain.RegisterUsecase
 
 class App : Application() {
 
@@ -18,6 +20,11 @@ class App : Application() {
     val loginUsecase: LoginUsecase by lazy {
         LoginUsecaseImpl(app.loginApi, Handler(Looper.getMainLooper()))
     }
+
+    val registerUsecase: RegisterUsecase by lazy {
+        RegisterUsecaseImpl(app.loginApi, Handler(Looper.getMainLooper()))
+    }
+
 
 }
 
