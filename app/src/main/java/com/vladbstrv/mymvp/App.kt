@@ -20,11 +20,11 @@ class App : Application() {
     }
 
     val loginUsecase: LoginUsecase by lazy {
-        LoginUsecaseImpl(app.loginApi, Handler(Looper.getMainLooper()))
+        LoginUsecaseImpl(app.loginApi)
     }
 
     val registerUsecase: RegisterUsecase by lazy {
-        RegisterUsecaseImpl(app.loginApi, Handler(Looper.getMainLooper()))
+        RegisterUsecaseImpl(app.loginApi)
     }
 
     val restoreUsecase: RestoreUsecase by lazy {
