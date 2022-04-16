@@ -4,7 +4,7 @@ import android.os.Handler
 import com.vladbstrv.mymvp.domain.LoginApi
 import com.vladbstrv.mymvp.domain.usecase.RegisterUsecase
 
-class RegisterUsecaseImpl(private val loginApi: LoginApi, private val uiHandler: Handler) : RegisterUsecase {
+class RegisterUsecaseImpl(private val loginApi: LoginApi) : RegisterUsecase {
 
     override fun register(
         login: String,
@@ -15,9 +15,7 @@ class RegisterUsecaseImpl(private val loginApi: LoginApi, private val uiHandler:
     ) {
         Thread {
             val result = loginApi.register(login, password, repeatPassword, email)
-            uiHandler.post{
-                callback(result)
-            }
+            callback(result)
         }.start()
     }
 }
