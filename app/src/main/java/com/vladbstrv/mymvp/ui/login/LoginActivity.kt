@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -12,24 +14,46 @@ import com.vladbstrv.mymvp.databinding.ActivityLoginBinding
 import com.vladbstrv.mymvp.ui.register.RegisterActivity
 import com.vladbstrv.mymvp.ui.restorePassword.RestorePasswordActivity
 
-class LoginActivity : AppCompatActivity(), LoginContract.View {
+class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var presenter: LoginContract.Presenter
+    private var viewModel: LoginContract.ViewModel? = null
+    private val handler:Handler by lazy { Handler(Looper.getMainLooper()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        presenter = restorePresenter()
-        presenter.onAttach(this)
-
+        viewModel = restoreViewModel()
         binding.signInButton.setOnClickListener {
-            presenter.onLogin(
+            viewModel?.onLogin(
                 binding.loginTextInputLayout.editText?.text.toString(),
                 binding.passwordTextInputLayout.editText?.text.toString(),
             )
+        }
+
+        viewModel?.shouldShowProgress?.subscribe(handler) { shouldShow ->
+            if (shouldShow == true) {
+                showProgress()
+            } else {
+                hideProgress()
+            }
+        }
+
+        viewModel?.isSuccess?.subscribe(handler) {
+            if(it == true) {
+                setSuccess()
+            }
+        }
+
+        viewModel?.errorText?.subscribe(handler) {
+            it?.let {
+                val success = viewModel?.isSuccess?.value
+                if(success == false) {
+                    setError(it)
+                }
+            }
         }
 
         binding.forgetPasswordButton.setOnClickListener {
@@ -43,34 +67,41 @@ class LoginActivity : AppCompatActivity(), LoginContract.View {
         }
     }
 
-    private fun restorePresenter(): LoginPresenter {
-        val presenter = lastCustomNonConfigurationInstance as? LoginPresenter
-        return presenter ?: LoginPresenter(app.loginUsecase)
+    private fun restoreViewModel(): LoginViewModel {
+        val viewModel = lastCustomNonConfigurationInstance as? LoginViewModel
+        return viewModel ?: LoginViewModel(app.loginUsecase)
     }
 
     override fun onRetainCustomNonConfigurationInstance(): Any? {
-        return presenter
+        return viewModel
     }
 
-    override fun setSuccess() {
+    private fun setSuccess() {
         Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
     }
 
-    override fun setError() {
-        Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
+    private fun setError(error: String) {
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
     }
 
-    override fun showProgress() {
+    private fun showProgress() {
         binding.signInButton.isEnabled = false
         binding.createAccountButton.isEnabled = false
         binding.forgetPasswordButton.isEnabled = false
         hideKeyboard(this)
     }
 
-    override fun hideProgress() {
+    private fun hideProgress() {
         binding.signInButton.isEnabled = true
         binding.createAccountButton.isEnabled = true
         binding.forgetPasswordButton.isEnabled = true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel?.isSuccess?.unsubscribe()
+        viewModel?.errorText?.unsubscribe()
+        viewModel?.shouldShowProgress?.unsubscribe()
     }
 
     private fun hideKeyboard(activity: Activity) {

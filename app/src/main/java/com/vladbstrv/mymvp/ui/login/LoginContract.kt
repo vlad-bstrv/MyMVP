@@ -1,15 +1,19 @@
 package com.vladbstrv.mymvp.ui.login
 
-class LoginContract {
-    interface View {
-        fun setSuccess()
-        fun setError()
-        fun showProgress()
-        fun hideProgress()
-    }
+import androidx.annotation.MainThread
+import com.vladbstrv.mymvp.utils.Publisher
 
-    interface Presenter {
-        fun onAttach(view: View)
+class LoginContract {
+
+
+    interface ViewModel {
+
+        val shouldShowProgress: Publisher<Boolean>
+        val isSuccess: Publisher<Boolean>
+        val errorText: Publisher<String?>
+
+        @MainThread
         fun onLogin(login: String, password: String)
+
     }
 }
