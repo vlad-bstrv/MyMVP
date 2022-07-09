@@ -8,10 +8,6 @@ import com.vladbstrv.mymvp.domain.usecase.LoginUsecase
 class LoginUsecaseImpl(
     private val loginApi: LoginApi,
 ) : LoginUsecase {
-    override fun login(login: String, password: String, callback: (Boolean) -> Unit) {
-        Thread {
-            val result = loginApi.login(login, password)
-                callback(result)
-        }.start()
-    }
+    override fun login(login: String, password: String) = loginApi.login(login, password)
+
 }
