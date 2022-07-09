@@ -13,16 +13,14 @@ class LoginPresenter(private val loginUsecase: LoginUsecase) :  LoginContract.Pr
     override fun onLogin(login: String, password: String) {
         view.showProgress()
 
-        loginUsecase.login(login, password) { result ->
+        val result = loginUsecase.login(login, password)
+        if(result) {
             view.hideProgress()
-            if (result) {
-                view.setSuccess()
-            } else {
-                view.setError()
-            }
+            view.setSuccess()
+        } else {
+            view.hideProgress()
+            view.setError()
         }
-
-
     }
 
 
